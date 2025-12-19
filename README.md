@@ -77,4 +77,3 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 3. Click the X button or click outside to close the panel
 4. Drag the "Why?" bubble to reposition it anywhere on screen
 
-# AgenticAI-WhyOverlay
