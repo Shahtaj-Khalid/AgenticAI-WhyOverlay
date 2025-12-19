@@ -1,4 +1,4 @@
-# Agents Assemble - Why? UI Demo
+# AgenticAI - WhyOverlay
 
 A minimal, elegant UI demo for an AI agent UX concept that provides transparency into agent decisions.
 
