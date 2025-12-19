@@ -1,0 +1,860 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --background: #0B0D10;
+    --foreground: #ffffff;
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    color: var(--foreground);
+    background: var(--background);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+}
+
+/* Smooth scrolling for panels */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+
+*::-webkit-scrollbar {
+    width: 6px;
+}
+
+*::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Ambient particle animation - very slow, barely visible */
+@keyframes ambientFloat {
+    0% {
+        transform: translate(0, 0);
+        opacity: 0.03;
+    }
+
+    25% {
+        transform: translate(20px, -30px);
+        opacity: 0.05;
+    }
+
+    50% {
+        transform: translate(-15px, -50px);
+        opacity: 0.03;
+    }
+
+    75% {
+        transform: translate(30px, -20px);
+        opacity: 0.04;
+    }
+
+    100% {
+        transform: translate(0, 0);
+        opacity: 0.03;
+    }
+}
+
+.ambient-particle {
+    animation: ambientFloat linear infinite;
+    pointer-events: none;
+}
+
+/* Why Bubble - Premium Sci-Fi Aesthetic */
+@keyframes whyBreathe {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.02);
+        opacity: 0.98;
+    }
+}
+
+.why-bubble-container {
+    position: relative;
+    animation: whyBreathe 8s ease-in-out infinite;
+}
+
+.why-bubble-inner-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 30px;
+    background: radial-gradient(ellipse,
+            rgba(255, 255, 255, 0.1) 0%,
+            rgba(255, 255, 255, 0.05) 40%,
+            transparent 70%);
+    border-radius: 50%;
+    filter: blur(10px);
+    pointer-events: none;
+    z-index: 0;
+    animation: whyBreathe 8s ease-in-out infinite;
+    margin: 0;
+    padding: 0;
+    /* Ensure it's centered on the text, not the padding */
+    margin-top: -0.25rem;
+}
+
+.why-bubble-main {
+    position: relative;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border-radius: 9999px;
+    padding: 1rem 1.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    overflow: visible;
+}
+
+.why-bubble-container:hover .why-bubble-main {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        0 0 0 1px rgba(255, 255, 255, 0.08),
+        0 0 30px rgba(255, 255, 255, 0.05);
+    transform: scale(1.03);
+}
+
+.why-bubble-container:hover .why-bubble-inner-glow {
+    opacity: 1;
+    width: 90px;
+    height: 45px;
+    background: radial-gradient(ellipse,
+            rgba(255, 255, 255, 0.12) 0%,
+            rgba(255, 255, 255, 0.06) 40%,
+            transparent 70%);
+}
+
+/* Magnetic cursor interaction */
+.why-bubble-container {
+    cursor: move;
+}
+
+.why-bubble-container:hover {
+    cursor: pointer;
+}
+
+/* Subtle interaction hint */
+.why-bubble-hint {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0.35;
+    animation: hintBreathe 4s ease-in-out infinite;
+    pointer-events: none;
+    white-space: nowrap;
+    width: max-content;
+    text-align: center;
+}
+
+.why-bubble-hint span {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.why-bubble-hint-dimmed {
+    opacity: 0.2;
+    animation: hintBreatheDimmed 4s ease-in-out infinite;
+}
+
+.why-bubble-hint-dimmed span {
+    color: rgba(255, 255, 255, 0.25);
+}
+
+@keyframes hintBreathe {
+
+    0%,
+    100% {
+        opacity: 0.35;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes hintBreatheDimmed {
+
+    0%,
+    100% {
+        opacity: 0.2;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+}
+
+/* Pulsing center - circular glow */
+@keyframes energyFlowPulse {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 0;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.5);
+        opacity: 0.8;
+    }
+}
+
+/* Rotating circular glow - cycles through agents one at a time */
+@keyframes scanFade0 {
+
+    /* Agent 0: visible 0-23% of 16s cycle */
+    0% {
+        opacity: 0;
+    }
+
+    2% {
+        opacity: 0.5;
+    }
+
+    12% {
+        opacity: 1;
+    }
+
+    22% {
+        opacity: 0.3;
+    }
+
+    23% {
+        opacity: 0;
+    }
+
+    23.1%,
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes scanFade1 {
+
+    /* Agent 1: visible 25-48% of 16s cycle */
+    0%,
+    24.9% {
+        opacity: 0;
+    }
+
+    25% {
+        opacity: 0;
+    }
+
+    27% {
+        opacity: 0.5;
+    }
+
+    37% {
+        opacity: 1;
+    }
+
+    47% {
+        opacity: 0.3;
+    }
+
+    48% {
+        opacity: 0;
+    }
+
+    48.1%,
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes scanFade2 {
+
+    /* Agent 2: visible 50-73% of 16s cycle */
+    0%,
+    49.9% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    52% {
+        opacity: 0.5;
+    }
+
+    62% {
+        opacity: 1;
+    }
+
+    72% {
+        opacity: 0.3;
+    }
+
+    73% {
+        opacity: 0;
+    }
+
+    73.1%,
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes scanFade3 {
+
+    /* Agent 3: visible 75-98% of 16s cycle */
+    0%,
+    74.9% {
+        opacity: 0;
+    }
+
+    75% {
+        opacity: 0;
+    }
+
+    77% {
+        opacity: 0.5;
+    }
+
+    87% {
+        opacity: 1;
+    }
+
+    97% {
+        opacity: 0.3;
+    }
+
+    98% {
+        opacity: 0;
+    }
+
+    98.1%,
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Text color change when glow is active - synchronized per agent */
+@keyframes textGlow0 {
+    0% {
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    2% {
+        color: var(--agent-color);
+    }
+
+    22% {
+        color: var(--agent-color);
+    }
+
+    23% {
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    23.1%,
+    100% {
+        color: rgba(255, 255, 255, 0.8);
+    }
+}
+
+@keyframes textGlow1 {
+
+    0%,
+    24.9% {
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    25% {
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    27% {
+        color: var(--agent-color);
+    }
+
+    47% {
+        color: var(--agent-color);
+    }
+
+    48% {
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    48.1%,
+    100% {
+        color: rgba(255, 255, 255, 0.8);
+    }
+}
+
+@keyframes textGlow2 {
+
+    0%,
+    49.9% {
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    50% {
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    52% {
+        color: var(--agent-color);
+    }
+
+    72% {
+        color: var(--agent-color);
+    }
+
+    73% {
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    73.1%,
+    100% {
+        color: rgba(255, 255, 255, 0.8);
+    }
+}
+
+@keyframes textGlow3 {
+
+    0%,
+    74.9% {
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    75% {
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    77% {
+        color: var(--agent-color);
+    }
+
+    97% {
+        color: var(--agent-color);
+    }
+
+    98% {
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    98.1%,
+    100% {
+        color: rgba(255, 255, 255, 0.8);
+    }
+}
+
+@keyframes textGlowSubtitle0 {
+    0% {
+        color: rgba(255, 255, 255, 0.4);
+        opacity: 1;
+    }
+
+    2% {
+        color: var(--agent-color);
+        opacity: 0.7;
+    }
+
+    22% {
+        color: var(--agent-color);
+        opacity: 0.7;
+    }
+
+    23% {
+        color: rgba(255, 255, 255, 0.4);
+        opacity: 1;
+    }
+
+    23.1%,
+    100% {
+        color: rgba(255, 255, 255, 0.4);
+        opacity: 1;
+    }
+}
+
+@keyframes textGlowSubtitle1 {
+
+    0%,
+    24.9% {
+        color: rgba(255, 255, 255, 0.4);
+        opacity: 1;
+    }
+
+    25% {
+        color: rgba(255, 255, 255, 0.4);
+        opacity: 1;
+    }
+
+    27% {
+        color: var(--agent-color);
+        opacity: 0.7;
+    }
+
+    47% {
+        color: var(--agent-color);
+        opacity: 0.7;
+    }
+
+    48% {
+        color: rgba(255, 255, 255, 0.4);
+        opacity: 1;
+    }
+
+    48.1%,
+    100% {
+        color: rgba(255, 255, 255, 0.4);
+        opacity: 1;
+    }
+}
+
+@keyframes textGlowSubtitle2 {
+
+    0%,
+    49.9% {
+        color: rgba(255, 255, 255, 0.4);
+        opacity: 1;
+    }
+
+    50% {
+        color: rgba(255, 255, 255, 0.4);
+        opacity: 1;
+    }
+
+    52% {
+        color: var(--agent-color);
+        opacity: 0.7;
+    }
+
+    72% {
+        color: var(--agent-color);
+        opacity: 0.7;
+    }
+
+    73% {
+        color: rgba(255, 255, 255, 0.4);
+        opacity: 1;
+    }
+
+    73.1%,
+    100% {
+        color: rgba(255, 255, 255, 0.4);
+        opacity: 1;
+    }
+}
+
+@keyframes textGlowSubtitle3 {
+
+    0%,
+    74.9% {
+        color: rgba(255, 255, 255, 0.4);
+        opacity: 1;
+    }
+
+    75% {
+        color: rgba(255, 255, 255, 0.4);
+        opacity: 1;
+    }
+
+    77% {
+        color: var(--agent-color);
+        opacity: 0.7;
+    }
+
+    97% {
+        color: var(--agent-color);
+        opacity: 0.7;
+    }
+
+    98% {
+        color: rgba(255, 255, 255, 0.4);
+        opacity: 1;
+    }
+
+    98.1%,
+    100% {
+        color: rgba(255, 255, 255, 0.4);
+        opacity: 1;
+    }
+}
+
+/* Glitch effect */
+@keyframes glitch {
+
+    0%,
+    100% {
+        transform: translate(0);
+        filter: hue-rotate(0deg);
+    }
+
+    20% {
+        transform: translate(-1px, 1px);
+        filter: hue-rotate(5deg);
+    }
+
+    40% {
+        transform: translate(-1px, -1px);
+        filter: hue-rotate(-5deg);
+    }
+
+    60% {
+        transform: translate(1px, 1px);
+        filter: hue-rotate(3deg);
+    }
+
+    80% {
+        transform: translate(1px, -1px);
+        filter: hue-rotate(-3deg);
+    }
+}
+
+.agent-text {
+    animation: glitch 8s ease-in-out infinite;
+}
+
+.agent-name-text {
+    animation: glitch 8s ease-in-out infinite;
+}
+
+.agent-name-0 {
+    animation: textGlow0 16s ease-in-out infinite, glitch 8s ease-in-out infinite;
+}
+
+.agent-name-1 {
+    animation: textGlow1 16s ease-in-out infinite, glitch 8s ease-in-out infinite;
+}
+
+.agent-name-2 {
+    animation: textGlow2 16s ease-in-out infinite, glitch 8s ease-in-out infinite;
+}
+
+.agent-name-3 {
+    animation: textGlow3 16s ease-in-out infinite, glitch 8s ease-in-out infinite;
+}
+
+.agent-role-0 {
+    animation: textGlowSubtitle0 16s ease-in-out infinite;
+}
+
+.agent-role-1 {
+    animation: textGlowSubtitle1 16s ease-in-out infinite;
+}
+
+.agent-role-2 {
+    animation: textGlowSubtitle2 16s ease-in-out infinite;
+}
+
+.agent-role-3 {
+    animation: textGlowSubtitle3 16s ease-in-out infinite;
+}
+
+/* Subtle radial glow breathing animation - very gentle */
+@keyframes glowBreathe {
+
+    0%,
+    100% {
+        opacity: 0.15;
+    }
+
+    50% {
+        opacity: 0.25;
+    }
+}
+
+.agent-holographic {
+    position: relative;
+}
+
+/* Subtle radial glow behind text - stays local to label, visible on hover */
+.agent-glow-container {
+    position: relative;
+}
+
+.agent-glow-container::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 140px;
+    height: 70px;
+    background: radial-gradient(ellipse,
+            var(--agent-color) 0%,
+            var(--agent-color) 20%,
+            transparent 60%);
+    opacity: 0;
+    filter: blur(18px);
+    pointer-events: none;
+    z-index: -1;
+    transition: opacity 0.4s ease-in-out;
+    border-radius: 50%;
+}
+
+/* Show glow on hover - brighter */
+.group:hover .agent-glow-container::before {
+    opacity: 0.40;
+    animation: glowBreathe 12s ease-in-out infinite;
+}
+
+/* Animated lines on both sides - visible on hover */
+@keyframes lineFlowLeft {
+    0% {
+        transform: translateX(0) translateY(-50%);
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translateX(-15px) translateY(-50%);
+        opacity: 0.3;
+    }
+}
+
+@keyframes lineFlowRight {
+    0% {
+        transform: translateX(0) translateY(-50%);
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translateX(15px) translateY(-50%);
+        opacity: 0.3;
+    }
+}
+
+.agent-line-left,
+.agent-line-right {
+    position: absolute;
+    top: 50%;
+    width: 50px;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            var(--agent-color) 20%,
+            var(--agent-color) 80%,
+            transparent 100%);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1;
+    transition: opacity 0.3s ease-in-out;
+    filter: blur(0.5px);
+}
+
+.agent-line-left {
+    left: -30px;
+    transform: translateY(-50%);
+}
+
+.agent-line-right {
+    right: -30px;
+    transform: translateY(-50%);
+}
+
+/* Show and animate lines on hover */
+.group:hover .agent-line-left {
+    opacity: 1;
+    animation: lineFlowLeft 2.5s ease-in-out infinite;
+}
+
+.group:hover .agent-line-right {
+    opacity: 1;
+    animation: lineFlowRight 2.5s ease-in-out infinite;
+}
+
+/* Rotating circular glow - cycles through all agents */
+.agent-scan-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    pointer-events: none;
+    z-index: 11;
+    opacity: 0;
+}
+
+.agent-scan-0 {
+    animation: scanFade0 16s ease-in-out infinite;
+}
+
+.agent-scan-1 {
+    animation: scanFade1 16s ease-in-out infinite;
+}
+
+.agent-scan-2 {
+    animation: scanFade2 16s ease-in-out infinite;
+}
+
+.agent-scan-3 {
+    animation: scanFade3 16s ease-in-out infinite;
+}
+
+.agent-scan-circle::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle,
+            var(--agent-color) 0%,
+            var(--agent-color) 40%,
+            transparent 70%);
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    box-shadow:
+        0 0 15px var(--agent-color),
+        0 0 30px var(--agent-color),
+        inset 0 0 15px var(--agent-color);
+    animation: energyFlowPulse 2.5s ease-in-out infinite;
+    filter: blur(2px);
+}
